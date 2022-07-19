@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace CabInvoiceGenerator
-{
+{ 
     public class CabInvoiceException : Exception
     {
         public ExceptionType type;
