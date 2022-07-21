@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 namespace CabInvoiceGenerator
 {
     public class RideMode
-    {
-        public enum RideType  
+    { 
+        public enum RideType 
         { 
-            NORMAL
+            NORMAL,
+            PREMIUM
         }
     }
 }

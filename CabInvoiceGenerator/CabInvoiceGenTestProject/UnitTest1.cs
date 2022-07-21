@@ -13,18 +13,58 @@ namespace CabInvoiceGenTestProject
         [TestMethod]
         public void GivenDistanceAndTimeShouldReturnTotalFare()
         {
+            //Arrange
             invoiceGenerator = new InvoiceGenerator(RideType.NORMAL);
-
-            double distance = 2.0;
-            int time = 5;
-
-            double fare = invoiceGenerator.CalculateFare(distance, time);
-            double expected = 25;
-
+            double distance = 15;
+            int time = 10;
+            //Act
+            double fare = invoiceGenerator.CalculateFare(time , distance);
+            double expected = 160;
+            //Assert
             Assert.AreEqual(expected, fare);
         }
 
+        //UC2 Add multiple rides
+        // Test Case 2 : For Multiple Rides
+        [TestMethod]
+        public void GivenMultipleRidesReturnAggregateFare()
+        {
+            //Arrange
+            invoiceGenerator = new InvoiceGenerator(RideType.NORMAL);
+            double actual, expected = 375;  //215+160 = 375/-
+            int time = 10; //10*1 =10
+            double distance = 15;  //15*10=150
+            Ride[] cabRides = new Ride[]
+            {
+                new Ride(10, 15), //160
+                new Ride(15, 20)  //15*1+20*10=215
+            };
 
+            //Act
+            actual = invoiceGenerator.CalculateAgreegateFare(cabRides);
+            //Assert
+            Assert.AreEqual(actual, expected);
+        }
 
+        //UC3-Enhanced Invoice
+        [TestMethod]
+        public void GivenInvoiceReturnNumOfRideTotalFareandAverageFare() 
+        {
+            //Arrange
+            invoiceGenerator = new InvoiceGenerator(RideType.NORMAL);
+            Ride[] cabRides = new Ride[]
+            {
+                new Ride(10, 15), //160
+                new Ride(15, 20)  //15*1+20*10=215
+            };
+            double totalfare = 375;
+            InvoiceSummary expected = new InvoiceSummary(cabRides.Length, totalfare);  //215+160 = 375/-
+
+            //Act
+            var actual = invoiceGenerator.CalculateAgreegateFare(cabRides);
+
+            //Assert
+            Assert.AreEqual(actual, expected);
+        }
     }
 }
