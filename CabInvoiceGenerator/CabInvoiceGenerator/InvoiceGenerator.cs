@@ -14,6 +14,7 @@ namespace CabInvoiceGenerator
         public readonly int COST_PER_TIME;
         public readonly int MINIMUM_FARE;
         public RideType rideType;
+        public RideRepository rideRepository;
 
         // Create Parameterized constructor
         public InvoiceGenerator(RideMode.RideType rideType)
@@ -66,6 +67,7 @@ namespace CabInvoiceGenerator
             double agreegateFare = Math.Max(totalFare, MINIMUM_FARE);
             return agreegateFare;
         }
+
         public InvoiceSummary CalculateTotalEnhancedFare(Ride[] rides)
         {
             double totalFare = 0;
@@ -77,5 +79,30 @@ namespace CabInvoiceGenerator
             return new InvoiceSummary(rides.Length, totalFare);
         }
 
+        public void AddRides(string userId, Ride[] rides)
+        {
+            try
+            {
+                rideRepository.AddRide(userId, rides);
+            }
+            catch (CabInvoiceException)
+            {
+                if (rides == null)
+                {
+                    throw new CabInvoiceException(CabInvoiceException.ExceptionType.NULL_RIDES, "Rides are null");
+                }
+            }
+        }
+        public InvoiceSummary GetInvoiceSummary(string userId)
+        {
+            try
+            {
+                return this.CalculateTotalEnhancedFare(rideRepository.GetRides(userId));
+            }
+            catch (CabInvoiceException)
+            {
+                throw new CabInvoiceException(CabInvoiceException.ExceptionType.INVALID_USER_ID, "Ivalid User Id");
+            }
+        }
     }
 }

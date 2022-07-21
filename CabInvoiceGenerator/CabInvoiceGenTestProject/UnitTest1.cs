@@ -66,5 +66,23 @@ namespace CabInvoiceGenTestProject
             //Assert
             Assert.AreEqual(actual, expected);
         }
+
+        //UC4 Given userId should return Invoice Summary
+        [TestMethod]
+        public void GivenUserIdShouldReturnInvoice()
+        {
+            InvoiceGenerator invoiceGenerator = new InvoiceGenerator(RideType.NORMAL);
+            Ride[] rides = { new Ride(5 , 2.0), new Ride(1,0.1) };
+            string userId = "001";
+            invoiceGenerator.AddRides(userId, rides);
+            string userIdForSecondUser = "002";
+            Ride[] ridesForSeconndUser = { new Ride(10,3.0), new Ride(2 ,0.1) };
+            invoiceGenerator.AddRides(userIdForSecondUser, ridesForSeconndUser);
+
+            InvoiceSummary summary = invoiceGenerator.GetInvoiceSummary(userId);
+            InvoiceSummary expectedSummary = new InvoiceSummary(2, 30.0);
+
+            Assert.AreEqual(expectedSummary, summary);
+        }
     }
 }
