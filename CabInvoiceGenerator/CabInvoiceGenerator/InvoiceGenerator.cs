@@ -66,6 +66,7 @@ namespace CabInvoiceGenerator
             double agreegateFare = Math.Max(totalFare, MINIMUM_FARE);
             return agreegateFare;
         }
+
         public InvoiceSummary CalculateTotalEnhancedFare(Ride[] rides)
         {
             double totalFare = 0;
@@ -76,6 +77,6 @@ namespace CabInvoiceGenerator
             totalFare = Math.Max(totalFare, MINIMUM_FARE);
             return new InvoiceSummary(rides.Length, totalFare);
         }
-
+        
     }
 }

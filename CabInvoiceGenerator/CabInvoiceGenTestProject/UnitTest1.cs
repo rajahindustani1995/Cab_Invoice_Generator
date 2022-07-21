@@ -61,7 +61,7 @@ namespace CabInvoiceGenTestProject
             InvoiceSummary expected = new InvoiceSummary(cabRides.Length, totalfare);  //215+160 = 375/-
 
             //Act
-            var actual = invoiceGenerator.CalculateAgreegateFare(cabRides);
+            var actual = invoiceGenerator.CalculateTotalEnhancedFare(cabRides);
 
             //Assert
             Assert.AreEqual(actual, expected);
