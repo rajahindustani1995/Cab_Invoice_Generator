@@ -10,9 +10,9 @@ namespace CabInvoiceGenerator
     public class InvoiceGenerator
     {
         
-        private readonly int MINIMUM_COST_PER_KM;
-        private readonly int COST_PER_TIME;
-        private readonly int MINIMUM_FARE;
+        public readonly int MINIMUM_COST_PER_KM;
+        public readonly int COST_PER_TIME;
+        public readonly int MINIMUM_FARE;
         public RideType rideType;
 
         // Create Parameterized constructor
@@ -30,19 +30,14 @@ namespace CabInvoiceGenerator
         }
 
         //UC1 = FOR SINGLE RIDE
-        public double CalculateFare(double distance , int time)
+        public double CalculateFare(int time , double distance)
         {
             try
             {
-                if(distance <= 0)
-                {
-                    throw new CabInvoiceException(CabInvoiceException.ExceptionType.INVALID_DISTANCE,"distsnce is invalid"); 
-                }
-                if(time <= 0)
-                {
+                if (time <= 0) 
                     throw new CabInvoiceException(CabInvoiceException.ExceptionType.INVALID_TIME, "time is invalid");
-
-                }
+                if (distance <= 0)
+                    throw new CabInvoiceException(CabInvoiceException.ExceptionType.INVALID_DISTANCE,"distsnce is invalid");      
                 else
                 {
                     double totalFare = 0;
@@ -58,5 +53,21 @@ namespace CabInvoiceGenerator
                 return 0;
             }
         }
+        //UC2- For Multiple rides
+        public double CalculateAgreegateFare(Ride[] rides)
+        {
+            double totalFare = 0;
+            if (rides.Length == 0)
+                throw new CabInvoiceException(CabInvoiceException.ExceptionType.NULL_RIDES, "No Rides Found");
+            foreach (Ride ride in rides)
+            {
+                totalFare += CalculateFare(ride.time, ride.distance);
+            }
+            double agreegateFare = Math.Max(totalFare, MINIMUM_FARE);
+            return agreegateFare;
+        }
+        
+       
+
     }
 }

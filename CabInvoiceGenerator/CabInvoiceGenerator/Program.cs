@@ -10,6 +10,7 @@ namespace CabInvoiceGenerator
             Console.WriteLine("\t\t\t\tWelcome to Cab Invoice Generator Problem\t\t\t\t");
             InvoiceGenerator invoiceGenerator = new InvoiceGenerator(RideType.NORMAL);
             Console.WriteLine(invoiceGenerator.CalculateFare(10, 15));
+
             Console.ReadLine();
         }
     }
