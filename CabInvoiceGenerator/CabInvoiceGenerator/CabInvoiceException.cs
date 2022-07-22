@@ -16,7 +16,7 @@ namespace CabInvoiceGenerator
             this.type = type;
         }
 
-        public enum ExceptionType
+        public enum ExceptionType 
         {
             INVALID_DISTANCE, INVALID_TIME, NULL_RIDES, INVALID_USER_ID, INVALID_RIDE_TYPE
         }

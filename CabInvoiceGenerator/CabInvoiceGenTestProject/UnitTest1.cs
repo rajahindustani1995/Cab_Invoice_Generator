@@ -63,8 +63,57 @@ namespace CabInvoiceGenTestProject
             //Act
             var actual = invoiceGenerator.CalculateTotalEnhancedFare(cabRides);
 
-            //Assert
+            //Assert 
             Assert.AreEqual(actual, expected);
+        }
+
+        //UC4 Given userId should return Invoice Summary
+        [TestMethod]
+        public void GivenUserIdShouldReturnInvoice()
+        {
+            InvoiceGenerator invoiceGenerator = new InvoiceGenerator(RideType.NORMAL);
+            Ride[] rides = { new Ride(5 , 2.0), new Ride(1,0.1) };
+            string userId = "001";
+            invoiceGenerator.AddRides(userId, rides);
+            string userIdForSecondUser = "002";
+            Ride[] ridesForSeconndUser = { new Ride(10,3.0), new Ride(2 ,0.1) };
+            invoiceGenerator.AddRides(userIdForSecondUser, ridesForSeconndUser);
+
+            InvoiceSummary summary = invoiceGenerator.GetInvoiceSummary(userId);
+            InvoiceSummary expectedSummary = new InvoiceSummary(2, 30.0);
+
+            Assert.AreEqual(expectedSummary, summary);
+        }
+
+        //UC5 Calculate fare for Primium ride
+        [TestMethod]
+        public void GivenDistanceAndTimeReturnTotalFair()
+        {
+            //Arrange
+            double distance = 2;
+            int time = 5;
+            double expected = 25;
+            InvoiceGenerator generator = new InvoiceGenerator(RideType.NORMAL);
+
+            //Act
+            double actual = generator.CalculateFare(time,distance);
+            //Assert
+            Assert.AreEqual(expected, actual);
+        }
+        [TestMethod]
+
+        public void GivenDistanceAndTimeReturnTotalFairForPrimiumRides()
+        {
+            //Arrange
+            double distance = 2;
+            int time = 5;
+            double expected = 40;
+            InvoiceGenerator generator = new InvoiceGenerator(RideType.PREMIUM);
+
+            //Act
+            double actual = generator.CalculateFare(time, distance);
+
+            Assert.AreEqual(expected, actual);
         }
     }
 }

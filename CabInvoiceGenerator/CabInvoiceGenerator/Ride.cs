@@ -15,7 +15,7 @@ namespace CabInvoiceGenerator
         public Ride(int time, double distance)
         {
             this.time = time;
-            this.distance = distance;
+            this.distance = distance; 
         }
     }
 }
